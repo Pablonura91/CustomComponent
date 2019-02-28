@@ -6,7 +6,6 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 
 
@@ -17,15 +16,14 @@ class MyViewCustom : ConstraintLayout, View.OnClickListener {
     private var textView_showResult: TextView? = null
     private var button_minus: Button? = null
     private var button_plus: Button? = null
-    private var mCallbackPlus: onClickedButtonPlusListener? = null
-    private var mCallbackMinus: onClickedButtonMinusListener? = null
+    private var mCallback: OnClickedButton? = null
 
     override fun onClick(v: View?) {
         if (v != null) {
             if (v.id == R.id.button_plus){
-                mCallbackPlus!!.onClickedButtonPlus(this, textView_showResult!!)
+                mCallback!!.onClickedButton(this, textView_showResult!!, v)
             } else if (v.id == R.id.button_minus){
-                mCallbackMinus!!.onClickedButtonMinus(this, textView_showResult!!)
+                mCallback!!.onClickedButton(this, textView_showResult!!, v)
             }
         }
     }
@@ -50,41 +48,16 @@ class MyViewCustom : ConstraintLayout, View.OnClickListener {
         button_plus = findViewById(R.id.button_plus) as Button
         button_minus = findViewById(R.id.button_minus) as Button
 
-        val a = context.obtainStyledAttributes(attrs, R.styleable.MyViewCustom, defStyle, 0)
-
-        val s = a.getString(R.styleable.MyViewCustom_hintText)
-        if (s != null) {
-            setHintText(s.toString())
-        }
-
         button_plus!!.setOnClickListener(this)
         button_minus!!.setOnClickListener(this)
 
-        a.recycle()
     }
 
-    private fun setHintText(toString: String) {
-        textView_showResult!!.setHint(toString)
-        invalidate()
-        requestLayout()
+    interface OnClickedButton{
+        fun onClickedButton(source: MyViewCustom, currentText: TextView, view: View)
     }
 
-    //Button plus
-    interface onClickedButtonPlusListener{
-        fun onClickedButtonPlus(source: MyViewCustom, currentText: TextView)
+    fun setOnClickedButton(listener: OnClickedButton){
+        mCallback = listener
     }
-
-    fun setOnClickedButtonPlusListener(listener: onClickedButtonPlusListener){
-        mCallbackPlus = listener
-    }
-
-    //Button minus
-    interface onClickedButtonMinusListener{
-        fun onClickedButtonMinus(source: MyViewCustom, currentText: TextView)
-    }
-
-    fun setOnClickedButtonMinusListener(listener: onClickedButtonMinusListener){
-        mCallbackMinus = listener
-    }
-
 }

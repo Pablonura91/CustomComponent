@@ -1,5 +1,5 @@
 <resources>
     <declare-styleable name="MyViewCustom">
-        <attr name="hintText" format="string"/>
+        <!--<attr name="hintText" format="string"/>-->
     </declare-styleable>
 </resources>
