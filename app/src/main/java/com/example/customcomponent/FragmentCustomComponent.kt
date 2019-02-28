@@ -4,14 +4,12 @@ package com.example.customcomponent
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import com.example.customsumrest.MyViewCustom
-import org.w3c.dom.Text
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -23,14 +21,30 @@ private const val ARG_PARAM2 = "param2"
  * A simple [Fragment] subclass.
  *
  */
-class FragmentCustomComponent : Fragment(), MyViewCustom.onClickedButtonPlusListener,
-    MyViewCustom.onClickedButtonMinusListener {
+class FragmentCustomComponent : Fragment(), MyViewCustom.OnClickedButton {
     var custom: MyViewCustom? = null
-    var currentText: String = "0"
-    lateinit var listenerCustomView: clickListenerCustomView
+    lateinit var listenerCustomView: ClickListenerCustomView
 
-    interface clickListenerCustomView {
+    interface ClickListenerCustomView {
         fun customViewClicked(currentText: String)
+    }
+
+    override fun onClickedButton(source: MyViewCustom, currentText: TextView, view: View) {
+        when (view.id) {
+            custom!!.findViewById<View>(R.id.button_plus).id -> {
+                Toast.makeText(this.activity, getString(R.string.Text_toast_button_plus), Toast.LENGTH_SHORT).show()
+                currentText.text = (currentText.text.toString().toInt() + 1).toString()
+                listenerCustomView.customViewClicked(currentText.text.toString())
+            }
+
+            custom!!.findViewById<View>(R.id.button_minus).id -> {
+                Toast.makeText(this.activity, getString(R.string.Text_toast_button_minus), Toast.LENGTH_SHORT)
+                    .show()
+                currentText.text = (currentText.text.toString().toInt() - 1).toString()
+                val currentText = custom!!.findViewById<View>(R.id.textView_showResult) as TextView
+                listenerCustomView.customViewClicked(currentText.text.toString())
+            }
+        }
     }
 
     override fun onCreateView(
@@ -46,33 +60,20 @@ class FragmentCustomComponent : Fragment(), MyViewCustom.onClickedButtonPlusList
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        listenerCustomView = context as clickListenerCustomView
+        listenerCustomView = context as ClickListenerCustomView
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        setListener()
-
         custom = this.activity!!.findViewById(R.id.custom)
 
-        custom!!.setOnClickedButtonPlusListener(this)
-        custom!!.setOnClickedButtonMinusListener(this)
+        setListener()
+        custom!!.setOnClickedButton(this)
 
     }
 
     private fun setListener() {
-        listenerCustomView.customViewClicked(currentText)
-    }
-
-    override fun onClickedButtonPlus(source: MyViewCustom, currentText: TextView) {
-        Toast.makeText(this.activity, "button plus clicked", Toast.LENGTH_SHORT).show()
-        currentText.text = (currentText.text.toString().toInt() + 1).toString()
-        listenerCustomView.customViewClicked(currentText.text.toString())
-    }
-
-    override fun onClickedButtonMinus(source: MyViewCustom, currentText: TextView) {
-        Toast.makeText(this.activity, "button minus clicked", Toast.LENGTH_SHORT).show()
-        currentText.text = (currentText.text.toString().toInt() - 1).toString()
+        val currentText = custom!!.findViewById<View>(R.id.textView_showResult) as TextView
         listenerCustomView.customViewClicked(currentText.text.toString())
     }
 
