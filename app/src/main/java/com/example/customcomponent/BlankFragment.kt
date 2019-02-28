@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.fragment_blank.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -26,6 +27,22 @@ class BlankFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_blank, container, false)
     }
+    override fun onStart() {
+        super.onStart()
 
+        //val item = arguments!!.getParcelable<Product>("product")
+        test.text = arguments!!.get("currentText").toString()
+    }
 
+    companion object {
+        fun newInstance(currentText: String): BlankFragment {
+            val fragmentDetails = BlankFragment()
+            val args = Bundle()
+
+            args.putString("currentText", currentText)
+            fragmentDetails.arguments = args
+
+            return fragmentDetails
+        }
+    }
 }
