@@ -14,7 +14,6 @@ import android.widget.TextView
  * TODO: document your custom view class.
  */
 class MyViewCustom : ConstraintLayout, View.OnClickListener {
-
     private var textView_showResult: TextView? = null
     private var button_minus: Button? = null
     private var button_plus: Button? = null
