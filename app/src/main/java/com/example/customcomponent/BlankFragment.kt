@@ -30,7 +30,6 @@ class BlankFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        //val item = arguments!!.getParcelable<Product>("product")
         test.text = arguments!!.get("currentText").toString()
     }
 
