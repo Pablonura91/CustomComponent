@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 
 
-class MainActivity : AppCompatActivity(), FragmentCustomComponent.clickListenerCustomView {
+class MainActivity : AppCompatActivity(), FragmentCustomComponent.ClickListenerCustomView {
     override fun customViewClicked(currentText: String) {
         if (findViewById<View>(R.id.ConstraintRight) != null) {
             val fragmentDetails = BlankFragment.newInstance(currentText)
