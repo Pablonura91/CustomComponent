@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="constrainGuide_begin_land">317dp</dimen>
+    <dimen name="layout_width">0dp</dimen>
+    <dimen name="layout_height">0dp</dimen>
+    <dimen name="layout_marginStart_constrain">8dp</dimen>
+    <dimen name="layout_marginBottom_constrain">8dp</dimen>
+    <dimen name="layout_marginTop_constrain">8dp</dimen>
+    <dimen name="layout_marginEnd_constrain">8dp</dimen>
+    <dimen name="constrainGuide_begin_portrait">348dp</dimen>
+    <dimen name="textSize">36sp</dimen>
+</resources>
